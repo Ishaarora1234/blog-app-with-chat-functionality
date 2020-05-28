@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {% if user.is_authenticated %}
+        <h3>HI {{ user.username }} </h3>
+    {% endif %}
+    <a href="{% url 'confession:create-post' %}">New Post</a>
+    {% for post in object_list %}
+        <h3>Title : {{post.title}}</h3>
+        <p>{{post.get_date}}</p>
+        
+        {% if post.display_name %}
+            <h4>USER(ANOMONOUS): {{post.display_name}}</h4>
+        {% else %}
+            <h4>USER: {{post.author}}</h4>
+        {% endif %}
+
+        <p>Content :{{post.content|slice:":200" }}</p>
+        <a href="{% url 'confession:post-detail' post.slug  %}">Read More &rarr;</a>
+    {% endfor %}
+</body>
+
+</html>
